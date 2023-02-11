@@ -109,7 +109,15 @@
 
         function convert_calendar() {
 
+            var checkls = document.getElementById('solar').checked;  
+                var checkls2 = document.getElementById('lunar').checked;  
 
+                if(checkls == false && checkls2 == false){
+                    alert('請選擇“西元(陽曆)” 或是 “農曆(陰曆)”');
+                    block;
+                }
+            
+            
             
 
 
@@ -182,8 +190,8 @@
              } continue; case '2': if (_0x2de314['vYjYL']
              (_0x424956[_0x192d('0x2a', 'gquP')], null)) { var _0x5ce7ef = _0x424956[_0x192d('0x2b', 'nNKP')]; } else { var _0x5ce7ef = ''; } continue; case '3': var _0x5ce7ef; continue; case '4': var _0x5077bf = _0x2de314[_0x192d('0x2c', 'vf[)')]($, _0x2de314[_0x192d('0x2d', 'vBFu')])['val'](); continue; case '5': var _0xe7ec48 = _0x2de314[_0x192d('0x2e', 'JdpC')]($, _0x2de314[_0x192d('0x2f', 'XqL9')])['val'](); continue; case '6': $(_0x192d('0x30', 'C8LP'))[_0x192d('0x31', 'V6$B')](_0x2de314['RvIHK'](_0x2de314['SunIE'](_0x2de314[_0x192d('0x32', 'ZrCt')](_0x2de314[_0x192d('0x33', 'FD6l')](_0x2de314['evYOZ'](_0x2de314[_0x192d('0x34', 'mz@)')](_0x2de314[_0x192d('0x35', 'li^$')](_0x2de314['evYOZ'](_0x2de314[_0x192d('0x36', 'C(dR')](_0x2de314[_0x192d('0x37', ')A^E')](_0x2de314[_0x192d('0x38', 'vBFu')](_0x2de314[_0x192d('0x39', '[dSb')](_0x2de314['vPwEd'](_0x2de314[_0x192d('0x3a', '!MWh')](_0x2de314[_0x192d('0x3b', 'ru8z')](_0x2de314['CxaKb'](_0x2de314['CxaKb'](_0x2de314[_0x192d('0x3c', 'J2o6')](_0x2de314[_0x192d('0x3d', 'GHoo')], _0x424956[_0x192d('0x3e', 'd8GU')]), '年') + _0x424956['cMonth'] + '月' + _0x424956[_0x192d('0x3f', 'H6aT')], '日'), _0x424956['astro']), _0x5ce7ef), _0x2de314[_0x192d('0x40', 'nNKP')]), _0x192d('0x41', '!MWh')), _0x424956[_0x192d('0x42', 'iB^v')] - 0x777), '年'), _0x424956[_0x192d('0x43', 'C8LP')]), _0x424956[_0x192d('0x44', 'besh')]), '<br><br>' + '天干地支 : '), _0x424956[_0x192d('0x45', '^elW')]) + '年', _0x424956['gzMonth']), '月') + 
             _0x424956[_0x192d('0x46', 'WGa6')] + '日' + '<br><br>' + '生肖 : ' + 
-            '（' + _0x424956[_0x192d('0x47', 'iB^v')], 
-            '年）'), 
+            '' + _0x424956[_0x192d('0x47', 'iB^v')], 
+            '年'), 
             
             _0x59c6e3), _0x2de314[_0x192d('0x48', 'vf[)')])); 
             continue; 
@@ -255,9 +263,9 @@
 
     <h1>輸入的日期是：</h1>
 
-    <input type="radio" name="which_calendar" id="solar" value="solar" onclick="handleClick(this);" checked="">
+    <input type="radio" name="which_calendar" id="solar" value="solar" onclick="handleClick(this);" onchange="getValue(this)">
     <label for="solar">西元(陽曆)</label><br>
-    <input type="radio" name="which_calendar" id="lunar" value="lunar" onclick="handleClick(this);">
+    <input type="radio" name="which_calendar" id="lunar" value="lunar" onchange="getValue(this)" onclick="handleClick(this);">
     <label for="lunar">農曆(陰曆)</label>
 
     <div>
@@ -301,14 +309,9 @@
         </div>
     </div><br>
 
-    <button type="button" id="submitDataEncoder" onclick="convert_calendar();">轉換日期</button> <br><br>
+    <button type="button" id="submitDataEncoder" onclick="convert_calendar();age();">轉換日期</button> <br><br>
 
     <div class="solarlunar result-highlight"></div><br>
-
-
-
-    <input type="button" name="submit" value="計算虛歲" onclick="age()" />
-
     <div id="age"></div>
     <div id="age2"></div>
 
@@ -318,11 +321,16 @@
             var m1 = document.getElementById('input_solar_month').value;
             var y1 = document.getElementById('input_solar_year').value;
 
+            var y12 = parseInt(document.getElementById("input_lunar_year").value);
+
+
+            
             var date = new Date();
             var d2 = date.getDate();
             var m2 = 1 + date.getMonth();
             var y2 = date.getFullYear();
             var month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            
 
             if (d1 > d2) {
                 d2 = d2 + month[m2 - 1];
@@ -333,16 +341,39 @@
                 y2 = y2 - 1;
             }
             var y = y2 - y1;
+            var y123 = y12+1911;
 
-            document.getElementById('age').innerHTML = '用國曆生日計算' + '你的年紀是' + y+2 + ' 歲 ';
-            document.getElementById('age2').innerHTML = '用農曆生日計算' + '你的年紀是 ' + y+1 + ' 歲 ';
+            document.getElementById('age').innerHTML = '你的虛歲是' + (y2 - y1+1) + ' 歲 ';
+            document.getElementById('age2').innerHTML = '你的虛歲是 ' + (y2 - y123 + 1) + ' 歲 ';
         }
 
         function getlunarAge(){
             const solarAge = Math.floor(new Date() - new Date('2021/1/1') / 1000 / 3600 / 24 / 365)
         }
     </script>
-    
+
+
+            <script>
+                function getValue(radio) {
+                var checkls = document.getElementById('solar').checked;  
+                var checkls2 = document.getElementById('lunar').checked;  
+
+                // if(checkls == false){
+                //     alert('hahaha');
+                // }
+                    
+                    if((radio.value) == "solar"){
+                        document.getElementById("age2").style.display = "none";
+                        document.getElementById("age").style.display = "block"; 
+
+                    }else{
+                        document.getElementById("age2").style.display = "block"; 
+                        document.getElementById("age").style.display = "none"; 
+                    }
+                    
+                }
+            </script>
+
 
 </body>
 </html>
